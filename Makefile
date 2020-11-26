@@ -19,11 +19,19 @@ build: ## Make the latest build of the image
 start: ARGS?=-d
 start: PORT?=443
 start: ## Start container with docker-compose.yml
-	IMAGE=$(IMAGE) PORT=$(PORT) docker-compose up $(ARGS)
+	PORT=$(PORT) docker-compose up $(ARGS)
+
+colab: ARGS?=-d
+colab: OPT?="\
+	--NotebookApp.port_retries=0 \
+	--NotebookApp.token='' \
+	--NotebookApp.allow_origin='https://colab.research.google.com'"
+colab: ## Start container with docker-compose.yml
+	PORT=8888 PASSWD="" OPT=$(OPT) docker-compose up $(ARGS)
 
 stop: ARGS?=
 stop: ## Stop container with docker-compose.yml
-	IMAGE=$(IMAGE) docker-compose down $(ARGS)
+	docker-compose down $(ARGS)
 
 test: ## Make a test run against the latest image
 	pytest tests

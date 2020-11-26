@@ -1,4 +1,4 @@
-FROM dddlab/python-rstudio-notebook:v20200916-631376e-94fdd01b492f
+FROM jupyter/scipy-notebook:dc57157d6316
 
 # start binder compatibility
 # from https://mybinder.readthedocs.io/en/latest/tutorials/dockerfile.html
@@ -16,3 +16,5 @@ RUN chown -R ${NB_UID} ${HOME}
 USER ${NB_USER}
 
 RUN pip install cookiecutter
+RUN pip install --upgrade jupyter_http_over_ws>=0.0.7 && \
+    jupyter serverextension enable --py jupyter_http_over_ws
